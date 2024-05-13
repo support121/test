@@ -1,14 +1,5 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
-
-MAINTAINER bhargavVasani15111
-
-LABEL BASE_IMAGE="registry.access.redhat.com/ubi8/ubi-minimal:8.5"
-LABEL JAVA_VERSION="11"
-
-RUN microdnf install --nodocs java-11-openjdk-headless && microdnf clean all
-
-WORKDIR /work/
-COPY target/*.jar /work/application.jar
-
-EXPOSE 8080
-CMD ["java", "-jar", "application.jar"]
+FROM node:4.2
+COPY . /src
+RUN cd /src && npm install
+EXPOSE 4000
+CMD ["node", "/src/server.js"]
